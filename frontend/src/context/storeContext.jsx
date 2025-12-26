@@ -6,7 +6,8 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
-  const url = "http://localhost:4000";
+  // const url = "http://localhost:4000";
+  const url = "https://food-delivery-app-1c2g.onrender.com";
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
 
@@ -40,8 +41,13 @@ const StoreContextProvider = (props) => {
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
+      console.log(cartItems, "cartItems");
+      console.log(food_list, "food_list");
+
       if (cartItems[item] > 0) {
         let itemInfo = food_list.find((product) => product._id === item);
+        console.log(itemInfo, "itemInfo");
+
         totalAmount += itemInfo.price * cartItems[item];
       }
     }

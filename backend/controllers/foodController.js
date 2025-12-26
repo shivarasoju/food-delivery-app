@@ -3,21 +3,38 @@ import foodModel from "../models/foodModel.js";
 import fs from "fs";
 
 // add fooditem
+import cloudinary from "../config/cloudinary.js"; // adjust path as needed
 
 const addFood = async (req, res) => {
-  let image_filename = `${req.file.filename}`;
-  const food = new foodModel({
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    category: req.body.category,
-    image: image_filename,
-  });
   try {
+    // Upload to Cloudinary
+    console.log(req.file);
+    const result = await cloudinary.uploader.upload(req.file.path);
+
+    // If upload is successful, keep the local file
+    const food = new foodModel({
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      category: req.body.category,
+      image: result.secure_url,
+    });
+
     await food.save();
+
     res.json({ success: true, message: "Food Added" });
   } catch (error) {
     console.log(error);
+
+    //Only delete local file when something fails
+    if (req.file && req.file.path) {
+      try {
+        fs.unlinkSync(req.file.path);
+      } catch (err) {
+        console.log("Failed to remove local file:", err);
+      }
+    }
+
     res.json({ success: false, message: "Error" });
   }
 };
