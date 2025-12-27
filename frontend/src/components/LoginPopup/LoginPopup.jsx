@@ -6,7 +6,8 @@ import axios from "axios";
 
 const LoginPopup = ({ setShowLogin }) => {
   const [currState, setCurrState] = useState("Sign Up");
-  const { url, setToken } = useContext(StoreContext);
+  const { url, setToken, fetchFoodList, loadCartData } =
+    useContext(StoreContext);
 
   const [data, setData] = useState({
     name: "",
@@ -33,6 +34,8 @@ const LoginPopup = ({ setShowLogin }) => {
     if (response.data.success) {
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
+      fetchFoodList();
+      loadCartData(response.data.token);
       setShowLogin(false);
     } else {
       alert(response.data.message);

@@ -1,0 +1,58 @@
+.skeleton-order {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.skeleton {
+  background: #e0e0e0;
+  border-radius: 4px;
+  animation: shimmer 1.3s infinite linear;
+}
+
+.image-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.skeleton-content {
+  flex: 1;
+}
+
+.line {
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.wide {
+  width: 80%;
+}
+
+.medium {
+  width: 60%;
+}
+
+.small {
+  width: 40%;
+}
+
+.tiny {
+  width: 60px;
+  height: 14px;
+}
+
+.select {
+  width: 130px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}

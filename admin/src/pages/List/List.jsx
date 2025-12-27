@@ -2,26 +2,41 @@ import React, { useEffect, useState } from "react";
 import "./List.css";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Skeleton from "../../components/Skeleton/Skeleton";
 
 const List = ({ url }) => {
   const [list, setList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchList = async () => {
-    const response = await axios.get(`${url}/api/food/list`);
-    if (response.data.success) {
-      setList(response.data.data);
-    } else {
-      toast.error("Error");
+    setIsLoading(true);
+    try {
+      const response = await axios.get(`${url}/api/food/list`);
+      if (response.data.success) {
+        setList(response.data.data);
+      } else {
+        toast.error("Error");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const removeFood = async (foodId) => {
-    const response = await axios.post(`${url}/api/food/remove`, { id: foodId });
-    await fetchList();
-    if (response.data.success) {
-      toast.success(response.data.message);
-    } else {
-      toast.error("Error in deleting");
+    try {
+      const response = await axios.post(`${url}/api/food/remove`, {
+        id: foodId,
+      });
+      await fetchList();
+      if (response.data.success) {
+        toast.success(response.data.message);
+      } else {
+        toast.error("Error in deleting");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
     }
   };
 
@@ -40,21 +55,25 @@ const List = ({ url }) => {
           <b>Price</b>
           <b>Action</b>
         </div>
-        {list.map((item, index) => {
-          return (
-            <div key={index}>
-              <div className="list-table-format">
-                <img src={item.image} alt="" />
-                <p>{item.name}</p>
-                <p>{item.category}</p>
-                <p>{item.price}</p>
-                <p onClick={() => removeFood(item._id)} className="cursor">
-                  X
-                </p>
+        {isLoading ? (
+          <Skeleton count={5} />
+        ) : (
+          list.map((item, index) => {
+            return (
+              <div key={index}>
+                <div className="list-table-format">
+                  <img src={item.image} alt="" />
+                  <p>{item.name}</p>
+                  <p>{item.category}</p>
+                  <p>{item.price}</p>
+                  <p onClick={() => removeFood(item._id)} className="cursor">
+                    X
+                  </p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </div>
   );

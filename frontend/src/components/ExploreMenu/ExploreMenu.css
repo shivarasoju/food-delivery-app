@@ -20,6 +20,12 @@
   margin: 20px 0px;
   overflow-x: scroll;
 }
+.explore-menu-list-item {
+  transition: transform 0.3s ease, 0.3s ease;
+}
+.explore-menu-list-item:hover {
+  transform: translateZ(8px) scale(1.02);
+}
 .explore-menu-list::-webkit-scrollbar {
   display: none;
 }

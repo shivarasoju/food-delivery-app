@@ -21,14 +21,49 @@ const addToCart = async (req, res) => {
 
 //remove items from user cart
 
+// const removeFromCart = async (req, res) => {
+//   try {
+//     let userdata = await userModel.findById(req.userId);
+//     let cartData = await userdata.cartData;
+//     if (cartData[req.body.itemId] > 0) {
+//       cartData[req.body.itemId] -= 1;
+//       await userModel.findByIdAndUpdate(req.userId, { cartData });
+//     } else if (cartData[req.body.itemId] === 0) {
+//       await userModel.findByIdAndDelete(req.userId);
+//     }
+
+//     return res.json({
+//       success: true,
+//       message: "Removed from cart successfully!",
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     return res.json({
+//       success: false,
+//       message: "Removed from cart Failed!",
+//     });
+//   }
+// };
 const removeFromCart = async (req, res) => {
   try {
-    let userdata = await userModel.findById(req.userId);
-    let cartData = await userdata.cartData;
-    if (cartData[req.body.itemId] > 0) {
-      cartData[req.body.itemId] -= 1;
+    const itemId = req.body.itemId;
+
+    const user = await userModel.findById(req.userId);
+
+    if (!user || !user.cartData[itemId]) {
+      return res.json({ success: false, message: "Item not in cart" });
     }
-    await userModel.findByIdAndUpdate(req.userId, { cartData });
+
+    if (user.cartData[itemId] > 1) {
+      await userModel.findByIdAndUpdate(req.userId, {
+        $inc: { [`cartData.${itemId}`]: -1 },
+      });
+    } else {
+      await userModel.findByIdAndUpdate(req.userId, {
+        $unset: { [`cartData.${itemId}`]: "" },
+      });
+    }
+
     return res.json({
       success: true,
       message: "Removed from cart successfully!",
@@ -37,7 +72,7 @@ const removeFromCart = async (req, res) => {
     console.log(error);
     return res.json({
       success: false,
-      message: "Removed from cart Failed!",
+      message: "Remove from cart failed!",
     });
   }
 };

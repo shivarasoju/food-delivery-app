@@ -1,0 +1,55 @@
+.skeleton {
+  background: #e0e0e0;
+  border-radius: 6px;
+  animation: shimmer 1.2s infinite linear;
+}
+
+/* Icon */
+.skeleton-icon {
+  width: 40px;
+  height: 40px;
+}
+
+/* Text lines */
+.skeleton-text {
+  height: 14px;
+  margin: 6px 0;
+}
+
+.skeleton-text.wide {
+  width: 100%;
+}
+
+.skeleton-text.price {
+  width: 30%;
+}
+
+.skeleton-text.small {
+  width: 40%;
+}
+
+.skeleton-text.status {
+  width: 50%;
+}
+
+/* Button */
+.skeleton-button {
+  width: 120px;
+  height: 32px;
+  border-radius: 16px;
+}
+
+/* Prevent interaction */
+.skeleton-order {
+  pointer-events: none;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
