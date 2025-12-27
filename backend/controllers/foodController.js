@@ -4,6 +4,7 @@ import fs from "fs";
 
 // add fooditem
 import cloudinary from "../config/cloudinary.js"; // adjust path as needed
+import streamifier from "streamifier";
 
 // const addFood = async (req, res) => {
 //   try {
@@ -41,6 +42,8 @@ import cloudinary from "../config/cloudinary.js"; // adjust path as needed
 
 //all food list
 const addFood = async (req, res) => {
+  console.log(req.file);
+
   try {
     if (!req.file) {
       return res
