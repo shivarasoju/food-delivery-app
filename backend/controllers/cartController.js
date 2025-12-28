@@ -29,7 +29,8 @@ const addToCart = async (req, res) => {
 //       cartData[req.body.itemId] -= 1;
 //       await userModel.findByIdAndUpdate(req.userId, { cartData });
 //     } else if (cartData[req.body.itemId] === 0) {
-//       await userModel.findByIdAndDelete(req.userId);
+//       delete cartData[req.body.itemId];
+//       await userModel.findByIdAndUpdate(req.userId, { cartData });
 //     }
 
 //     return res.json({
@@ -44,35 +45,40 @@ const addToCart = async (req, res) => {
 //     });
 //   }
 // };
+
 const removeFromCart = async (req, res) => {
   try {
-    const itemId = req.body.itemId;
+    const { itemId } = req.body;
 
-    const user = await userModel.findById(req.userId);
+    const userData = await userModel.findById(req.userId);
+    const cartData = userData.cartData;
 
-    if (!user || !user.cartData[itemId]) {
-      return res.json({ success: false, message: "Item not in cart" });
-    }
-
-    if (user.cartData[itemId] > 1) {
-      await userModel.findByIdAndUpdate(req.userId, {
-        $inc: { [`cartData.${itemId}`]: -1 },
-      });
-    } else {
-      await userModel.findByIdAndUpdate(req.userId, {
-        $unset: { [`cartData.${itemId}`]: "" },
+    if (!cartData[itemId]) {
+      return res.json({
+        success: false,
+        message: "Item not found in cart",
       });
     }
+
+    // Decrease quantity
+    cartData[itemId] -= 1;
+
+    // If quantity becomes 0, remove item completely
+    if (cartData[itemId] === 0) {
+      delete cartData[itemId];
+    }
+
+    await userModel.findByIdAndUpdate(req.userId, { cartData });
 
     return res.json({
       success: true,
-      message: "Removed from cart successfully!",
+      message: "Item removed from cart successfully",
     });
   } catch (error) {
     console.log(error);
     return res.json({
       success: false,
-      message: "Remove from cart failed!",
+      message: "Failed to remove item from cart",
     });
   }
 };
