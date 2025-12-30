@@ -1,4 +1,3 @@
-import React from "react";
 import "./Verify.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useContext } from "react";
@@ -16,13 +15,18 @@ const Verify = () => {
   //   console.log(success.orderId);
 
   const verifyPayment = async () => {
-    const response = await axios.post(url + "/api/order/verify", {
-      success,
-      orderId,
-    });
-    if (response.data.success) {
-      navigate("/my-orders");
-    } else {
+    try {
+      const response = await axios.post(url + "/api/order/verify", {
+        success,
+        orderId,
+      });
+      if (response.data.success) {
+        navigate("/my-orders");
+      } else {
+        navigate("/");
+      }
+    } catch (error) {
+      console.log("Payment verification failed: ", error);
       navigate("/");
     }
   };

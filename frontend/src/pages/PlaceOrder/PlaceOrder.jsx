@@ -119,7 +119,7 @@ const PlaceOrder = () => {
             required
             type="text"
             name="state"
-            value={data.value}
+            value={data.state}
             onChange={inputHandler}
             placeholder="State"
           />
@@ -130,7 +130,7 @@ const PlaceOrder = () => {
             type="text"
             name="zipcode"
             onChange={inputHandler}
-            value={data.value}
+            value={data.zipcode}
             placeholder="Zip code"
           />
           <input
