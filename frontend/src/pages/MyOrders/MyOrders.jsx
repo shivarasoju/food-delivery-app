@@ -32,9 +32,11 @@ const MyOrders = () => {
         { orderId },
         { headers: { token } }
       );
-      console.log(response.data);
 
-      setTrackOrder(response.data.status);
+      setTrackOrder((prev) => ({
+        ...prev,
+        [orderId]: response.data.status,
+      }));
     } catch (error) {
       console.log(error);
     }
@@ -91,7 +93,7 @@ const MyOrders = () => {
                   <p>Items: {order.items.length}</p>
                   <p>
                     <span> &#x25cf;</span>
-                    <b> {order.status}</b>
+                    <b>{orderStatus[order._id] || order.status}</b>
                   </p>
                   <button onClick={() => trackOrder(order._id)}>
                     Track Order
