@@ -4,9 +4,7 @@ import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/storeContext";
 
 const FoodItem = ({ id, name, price, description, image }) => {
-  const { cartItems, addToCart, removeFromCart, url } =
-    useContext(StoreContext);
-  // console.log(cartItems, "cartItems is in fooditem comp");
+  const { cartItems, addToCart, removeFromCart } = useContext(StoreContext);
 
   return (
     <div className="food-item">
@@ -17,6 +15,7 @@ const FoodItem = ({ id, name, price, description, image }) => {
             className="add"
             onClick={() => addToCart(id)}
             src={assets.add_icon_white}
+            alt="Add to cart"
           />
         ) : (
           <div className="food-item-counter">
@@ -46,4 +45,4 @@ const FoodItem = ({ id, name, price, description, image }) => {
   );
 };
 
-export default FoodItem;
+export default React.memo(FoodItem);

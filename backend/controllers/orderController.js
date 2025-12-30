@@ -113,4 +113,36 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
-export { placeOrder, verifyOrder, userOrders, listOrders, updateOrderStatus };
+const trackOrder = async (req, res) => {
+  try {
+    const { orderId } = req.body;
+
+    const order = await orderModel.findOne({
+      _id: orderId,
+      userId: req.userId,
+    });
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      status: order.status,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false });
+  }
+};
+
+export {
+  placeOrder,
+  verifyOrder,
+  userOrders,
+  listOrders,
+  updateOrderStatus,
+  trackOrder,
+};

@@ -9,7 +9,7 @@ const MyOrders = () => {
   const [data, setData] = useState([]);
   const { url, token } = useContext(StoreContext);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [orderStatus, setTrackOrder] = useState("");
   const getOrders = async () => {
     try {
       const response = await axios.post(
@@ -22,6 +22,21 @@ const MyOrders = () => {
       console.log(error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const trackOrder = async (orderId) => {
+    try {
+      const response = await axios.post(
+        url + "/api/order/track",
+        { orderId },
+        { headers: { token } }
+      );
+      console.log(response.data);
+
+      setTrackOrder(response.data.status);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -59,9 +74,9 @@ const MyOrders = () => {
               </p>
             </div>
           ) : (
-            data.map((order, index) => {
+            data.map((order) => {
               return (
-                <div key={index} className="my-orders-order">
+                <div key={order._id} className="my-orders-order">
                   <img src={assets.parcel_icon} alt="" />
                   <p>
                     {order.items.map((item, idx) => {
@@ -78,7 +93,7 @@ const MyOrders = () => {
                     <span> &#x25cf;</span>
                     <b> {order.status}</b>
                   </p>
-                  <button onClick={getOrders}>Track Order</button>
+                  <button onClick={trackOrder(order._id)}>Track Order</button>
                 </div>
               );
             })
@@ -90,7 +105,3 @@ const MyOrders = () => {
 };
 
 export default MyOrders;
-
-{
-  /* <button onClick={getOrders}>Track Order</button> */
-}

@@ -13,7 +13,7 @@ const ExploreMenu = ({ category, setCategory }) => {
         delicious meal at a time.
       </p>
       <div className="explore-menu-list">
-        {menu_list.map((item, index) => {
+        {menu_list.map((item) => {
           return (
             <div
               onClick={() =>
@@ -21,7 +21,7 @@ const ExploreMenu = ({ category, setCategory }) => {
                   prev === item.menu_name ? "All" : item.menu_name
                 )
               }
-              key={index}
+              key={item.menu_name}
               className="explore-menu-list-item"
             >
               <img

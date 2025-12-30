@@ -12,7 +12,7 @@ const Cart = () => {
     getTotalCartAmount,
     isCartLoading,
   } = useContext(StoreContext);
-  // console.log(cartItems, "in the cart comp");
+  const totalAmount = getTotalCartAmount();
   const navigate = useNavigate();
   return (
     <div className="cart">
@@ -33,7 +33,7 @@ const Cart = () => {
           food_list.map((item, index) => {
             if (cartItems[item._id] > 0) {
               return (
-                <div key={index}>
+                <div key={item._id}>
                   <div className="cart-items-title cart-items-item">
                     <img src={item.image} alt="" />
                     <p>{item.name}</p>
@@ -65,19 +65,17 @@ const Cart = () => {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>${totalAmount}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
+              <p>${totalAmount === 0 ? 0 : 2}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>
-                ${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}
-              </b>
+              <b>${totalAmount === 0 ? 0 : totalAmount + 2}</b>
             </div>
           </div>
           <button onClick={() => navigate("/order")}>

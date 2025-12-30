@@ -7,18 +7,20 @@ const Footer = () => {
     <div className="footer" id="footer">
       <div className="footer-content">
         <div className="footer-content-left">
-          <img src={assets.logo} alt="" />
+          <img src={assets.logo} alt="Tomato logo" />
           <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam
             esse at veritatis mollitia hic vitae repellendus nemo nam illo
             laboriosam.
           </p>
+
           <div className="footer-social-icons">
-            <img src={assets.facebook_icon} alt="" />
-            <img src={assets.twitter_icon} alt="" />
-            <img src={assets.linkedin_icon} alt="" />
+            <img src={assets.facebook_icon} alt="Facebook" />
+            <img src={assets.twitter_icon} alt="Twitter" />
+            <img src={assets.linkedin_icon} alt="LinkedIn" />
           </div>
         </div>
+
         <div className="footer-content-center">
           <h2>COMPANY</h2>
           <ul>
@@ -28,6 +30,7 @@ const Footer = () => {
             <li>Privacy policy</li>
           </ul>
         </div>
+
         <div className="footer-content-right">
           <h2>GET IN TOUCH</h2>
           <ul>
@@ -36,9 +39,11 @@ const Footer = () => {
           </ul>
         </div>
       </div>
+
       <hr />
+
       <p className="footer-copyright">
-        Copyright 2024 © Tomato.com - ALl Rights Reserved.
+        Copyright © {new Date().getFullYear()} Tomato.com – All Rights Reserved.
       </p>
     </div>
   );
