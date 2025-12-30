@@ -50,6 +50,14 @@ const MyOrders = () => {
         <div className="container">
           {isLoading ? (
             <MyOrdersSkeleton count={4} />
+          ) : data.length === 0 ? (
+            <div className="empty-state">
+              <h3>No orders yet 🛒</h3>
+              <p>
+                You haven’t placed any orders yet. Add items to cart and place
+                your first order!
+              </p>
+            </div>
           ) : (
             data.map((order, index) => {
               return (

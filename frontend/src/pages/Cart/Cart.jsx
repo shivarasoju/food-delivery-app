@@ -12,7 +12,7 @@ const Cart = () => {
     getTotalCartAmount,
     isCartLoading,
   } = useContext(StoreContext);
-  console.log(cartItems, "in the cart comp");
+  // console.log(cartItems, "in the cart comp");
   const navigate = useNavigate();
   return (
     <div className="cart">
