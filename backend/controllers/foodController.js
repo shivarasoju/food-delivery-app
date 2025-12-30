@@ -6,41 +6,6 @@ import fs from "fs";
 import cloudinary from "../config/cloudinary.js"; // adjust path as needed
 import streamifier from "streamifier";
 
-// const addFood = async (req, res) => {
-//   try {
-//     // Upload to Cloudinary
-//     console.log(req.file);
-//     const result = await cloudinary.uploader.upload(req.file.path);
-
-//     // If upload is successful, keep the local file
-//     const food = new foodModel({
-//       name: req.body.name,
-//       description: req.body.description,
-//       price: req.body.price,
-//       category: req.body.category,
-//       image: result.secure_url,
-//     });
-
-//     await food.save();
-
-//     res.json({ success: true, message: "Food Added" });
-//   } catch (error) {
-//     console.log(error);
-
-//     //Only delete local file when something fails
-//     if (req.file && req.file.path) {
-//       try {
-//         fs.unlinkSync(req.file.path);
-//       } catch (err) {
-//         console.log("Failed to remove local file:", err);
-//       }
-//     }
-
-//     res.json({ success: false, message: "Error in foodController" });
-//   }
-// };
-
-//all food list
 const addFood = async (req, res) => {
   console.log(req.file);
 
